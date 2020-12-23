@@ -1,0 +1,23 @@
+{
+    "name": "mother group",
+    "exp": [{
+        "start": {
+            "name": "time group",
+            "exp": [
+                {"start": ["trigger_time", "ge", "01:23:45"]},
+                {"and": ["trigger_time", "le", "12:34:56"]},
+                {"and": ["trigger_date", "ge", "2020-08-19"]},
+                {"and": ["trigger_date", "le", "2020-09-02"]}
+            ]
+        }
+    }, {
+        "and": {
+            "name": "other",
+            "exp": [
+                {"start": ["id", "nin", [1.1, 2, 3, "4"]]},
+                {"and": ["available", "eq", true]},
+                {"start": ["quantity", "gt", 10]}
+            ]
+        }
+    }]
+}

@@ -1,0 +1,16 @@
+GET http://{{host}}:8090/fm/v1.0/alarm/current
+Content-Type: application/json
+
+{
+	"page": 0,
+	"page_size": 10,
+	"filter": [
+		{"start": ["severity", "eq", "MINOR"]}
+	]
+}
+
+
+
+
+
+

@@ -1,0 +1,16 @@
+syntax = "proto3";
+package com.viettel.ems;
+
+option java_package = "com.viettel.ems";
+option java_outer_classname = "ProtobufGateway";
+
+import "org/onap/ves/DCAE.proto";
+
+service VesEventCollector {
+  // Sends a greeting
+  rpc Collect(org.onap.ves.VesEvent) returns (VesEventReply) {}
+}
+
+message VesEventReply {
+  int32 code = 1;
+}

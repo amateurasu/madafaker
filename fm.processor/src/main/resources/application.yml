@@ -1,0 +1,63 @@
+spring:
+  profiles:
+    include:
+      - db
+  main:
+    web-application-type: reactive
+server:
+  port: 8091
+---
+spring:
+  profiles: dev
+
+kafka:
+  group-id: fm
+  bootstrap-address: 127.0.0.1:29092
+  schema-register: http://127.0.0.1:8100
+
+ems:
+  wm:
+    address: http://localhost:9000/wm/
+  cm:
+    address: http://localhost:9000/cm/
+
+message:
+  topic:
+    name: fault
+
+---
+spring:
+  profiles: test
+
+kafka:
+  group-id: fm
+  bootstrap-address: 172.16.30.126:29092
+  schema-register: http://172.16.30.126:8100
+
+ems:
+  wm:
+    address: http://localhost:9000/wm/
+  cm:
+    address: http://localhost:9000/cm/
+
+message:
+  topic:
+    name: fault
+
+---
+spring:
+  profiles: production
+
+kafka:
+  group-id: fm
+  bootstrap-address: 10.60.88.22:29092
+  schema-register: http://10.60.88.22:8100
+
+ems:
+  wm:
+    address: http://10.60.88.22:8085/warning/send
+
+message:
+  topic:
+    name: fault
+

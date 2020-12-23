@@ -1,0 +1,12 @@
+syntax = "proto3";
+package org.onap.ves;
+
+option java_package = "org.onap.ves";
+option java_outer_classname = "EventKey";
+
+message Key {
+  int32  siteId         = 1;
+  int32  neId           = 2;
+  string eventCode      = 3;
+  int64  initialInstant = 4;
+}

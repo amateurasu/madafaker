@@ -1,0 +1,10 @@
+[
+    {"start": ["trigger_time", "ge", "01:23:45"]},
+    {"and": ["trigger_time", "le", "12:34:56"]},
+    {"and": ["trigger_date", "ge", "2020-08-19"]},
+    {"and": ["trigger_date", "le", "2020-09-02"]},
+    {"or": ["id", "nin", [1.1, 2, 3, 4]]},
+    {"and": ["available", "eq", true]},
+    {"and": ["name", "alike", "summer sale"]},
+    {"or": ["name", "match", "+summer -sale +(>vacation <firework)"]}
+]

@@ -1,0 +1,84 @@
+syntax = "proto3";
+package org.onap.ves;
+
+option java_package = "org.onap.ves";
+option java_outer_classname = "DCAE";
+
+message VesEvent {
+  Event event = 1;
+}
+
+message VesEventList {
+  repeated Event event = 1;
+}
+
+message Event {
+  CommonEventHeader commonEventHeader     = 1;
+  oneof eventFields {
+    FaultFields        faultFields        = 2;
+    NotificationFields notificationFields = 3;
+  }
+
+  // VES CommonEventHeader adapted to GPB (Google Protocol Buffers)
+  message CommonEventHeader {
+    string   domain                  =  1; // Yes
+    string   eventId                 =  2; // Yes
+    string   eventName               =  3; // Yes
+    string   eventType               =  4; // No
+    int64    lastEpochMicrosec       =  5; // Yes
+    string   nfcNamingCode           =  6; // No
+    string   nfNamingCode            =  7; // No
+    string   nfVendorName            =  8; // No
+    Priority priority                =  9; // Yes
+    string   reportingEntityId       = 10; // No
+    string   reportingEntityName     = 11; // Yes
+    int32    sequence                = 12; // Yes
+    string   sourceId                = 13; // No
+    string   sourceName              = 14; // Yes
+    int64    startEpochMicrosec      = 15; // Yes
+    string   stndDefinedNamespace    = 16; // No
+    string   timeZoneOffset          = 17; // No
+    string   version                 = 18; // Yes
+    string   vesEventListenerVersion = 19; // Yes
+
+    reserved "InternalHeaderFields";
+    reserved 100;
+  }
+
+  message FaultFields {
+    map<string, string> alarmAdditionalInformation = 1;
+    string              alarmCondition             = 2;
+    string              alarmInterfaceA            = 3;
+    string              eventCategory              = 4;
+    string              eventSeverity              = 5;
+    string              eventSourceType            = 6;
+    string              faultFieldsVersion         = 7;
+    string              specificProblem            = 8;
+    string              vfStatus                   = 9;
+  }
+
+  message NotificationFields {
+    map<string,string>    additionalFields          = 1;
+    repeated NamedHashMap arrayOfNamedHashMap       = 2;
+    string                changeContact             = 3;
+    string                changeIdentifier          = 4;
+    string                changeType                = 5;
+    string                newState                  = 6;
+    string                notificationFieldsVersion = 7;
+    string                oldState                  = 8;
+    string                stateInterface            = 9;
+  }
+
+  message NamedHashMap {
+    string              name    = 1;
+    map<string, string> hashMap = 2;
+  }
+
+  enum Priority {
+    PRIORITY_NOT_PROVIDED = 0;
+    HIGH                  = 1;
+    MEDIUM                = 2;
+    NORMAL                = 3;
+    LOW                   = 4;
+  }
+}

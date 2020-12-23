@@ -1,0 +1,42 @@
+spring:
+  profiles:
+    include:
+      - db
+  main:
+    web-application-type: reactive
+  webflux:
+    base-path: /fm
+
+server:
+  port: 8080
+
+fm:
+  rest:
+    enable: true
+  grpc:
+    enable: false
+    port: 8880
+  snmp:
+    enable: true
+    port: 8888
+
+---
+spring:
+  profiles: dev
+kafka:
+  bootstrap-address: localhost:29092
+  schema-register: http://localhost:8081
+
+---
+spring:
+  profiles: test
+kafka:
+  bootstrap-address: 172.16.30.126:29092
+  schema-register: http://172.16.30.126:8100
+
+---
+spring:
+  profiles: production
+kafka:
+  bootstrap-address: 10.60.88.22:29092
+  schema-register: http://10.60.88.22:8100

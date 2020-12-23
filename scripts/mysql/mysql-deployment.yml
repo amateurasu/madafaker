@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-pv-volume
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    #FIXME config this
+    path: /mnt/d/Data/k8s/mysql
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  type: NodePort
+  selector:
+    app: mysql
+  ports:
+    #FIXME config this
+    - {port: 3306, targetPort: 3306, nodePort: 30306}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - image: mysql:latest
+          name: mysql
+          env:
+            - {name: TZ, value: "Asia/Ho_Chi_Minh"}
+            - {name: MYSQL_ROOT_PASSWORD, value: "1"}
+          ports:
+            - {name: mysql, containerPort: 3306}
+          volumeMounts:
+            - {name: mysql-persistent-storage, mountPath: /var/lib/mysql}
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pv-claim

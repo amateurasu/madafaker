@@ -1,0 +1,15 @@
+# DOCKER ALTERNATIVE
+# docker run --name mysql-dev -p 3306:3306 -eMYSQL_ROOT_PASSWORD=1 -e TZ=Asia/Ho_Chi_Minh -d mysql
+
+# DEPLOY
+kubectl apply -f mysql-deployment.yml
+
+# DESCRIPTION
+kubectl describe deployment mysql
+kubectl get pods -l app=mysql
+kubectl get svc
+
+# TEAR DOWN
+# kubectl delete deployment,svc mysql
+# kubectl delete pvc mysql-pv-claim
+# kubectl delete pv mysql-pv-volume

@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+
+---
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/fm?useSSL=false
+    username: root
+    password: 1
+
+---
+spring:
+  profiles: test
+  datasource:
+    url: jdbc:mysql://172.16.30.126:3306/fm?useSSL=false
+    username: ems
+    password: 123456aA@
+
+---
+spring:
+  profiles: production
+  datasource:
+    url: jdbc:mysql://10.60.88.22:9999/fm_new?useSSL=false
+    username: ems
+    password: 123456aA@
