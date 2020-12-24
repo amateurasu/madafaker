@@ -13,7 +13,7 @@ spring:
 kafka:
   group-id: fm
   bootstrap-address: 127.0.0.1:29092
-  schema-register: http://127.0.0.1:8100
+  schema-register: http://127.0.0.1:8081
 
 ems:
   wm:

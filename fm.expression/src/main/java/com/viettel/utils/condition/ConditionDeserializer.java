@@ -117,7 +117,7 @@ public class ConditionDeserializer extends JsonDeserializer<ICondition> {
                 return parseComparable(parser, name, operator);
             case "in": case "nin":
                 return parseList(parser, name, operator);
-            case "alike": case "match":
+            case "contains": case "alike": case "match":
                 return parseString(parser, name, operator);
             default:
                 throw new JsonParseException(parser, "Do not expect this operator '" + operator + "'!");

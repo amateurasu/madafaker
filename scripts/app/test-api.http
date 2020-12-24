@@ -1,3 +1,18 @@
+
+###
+GET http://{{host}}:8090/fm/v1.0/alarm
+Content-Type: application/json
+
+{
+	"page": 0,
+	"page_size": 10,
+	"filter": [
+		{"start": ["severity", "eq", "MAJOR"]},
+        {"and": ["event_type", "contains", "event_type"]}
+	]
+}
+
+### Current Alarm
 GET http://{{host}}:8090/fm/v1.0/alarm/current
 Content-Type: application/json
 
@@ -5,12 +20,23 @@ Content-Type: application/json
 	"page": 0,
 	"page_size": 10,
 	"filter": [
-		{"start": ["severity", "eq", "MINOR"]}
+		{"start": ["severity", "eq", "MAJOR"]}
+
 	]
 }
 
+### Alarm History
+GET http://{{host}}:8090/fm/v1.0/alarm/history
+Content-Type: application/json
 
+{
+    "page": 0,
+    "page_size": 10,
+    "filter": [
+        {"start": ["severity", "eq", "MAJOR"]}
 
+    ]
+}
 
 
 

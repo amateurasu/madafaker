@@ -23,7 +23,7 @@ public class ScheduleService {
     public void postConstruct() {
         var scheduleConfigs = jdbc.query("SELECT * FROM schedule_config", mapper);
 
-        var trigger = new CronTrigger("10 * * * * ?");
-        scheduler.schedule(new CommandRunner("Specific time, 3 Seconds from now"), trigger);
+        // var trigger = new CronTrigger("10 * * * * ?");
+        // scheduler.schedule(new CommandRunner("Specific time, 3 Seconds from now"), trigger);
     }
 }

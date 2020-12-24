@@ -30,19 +30,19 @@ public class KafkaEventListener {
 
     @KafkaListener(topics = "${message.topic.name}")
     public void listenFaultMessage(
-        @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) DynamicMessage key,
+        @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) DynamicMessage kafkaKey,
         @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition,
         @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
         @Header(KafkaHeaders.RECEIVED_TIMESTAMP) long ts,
         @Payload DynamicMessage message
     ) throws InvalidProtocolBufferException {
         var time = new Date().getTime();
+        var key = EventKey.Key.parseFrom(kafkaKey.toByteArray());
         var event = DCAE.VesEvent.parseFrom(message.toByteArray());
-        var eventKey = EventKey.Key.parseFrom(key.toByteArray());
-        log.info("Received ({}:{}): {} ({}, lag: {})", topic, partition, eventKey, new Timestamp(ts), time - ts);
+        log.info("Received ({}:{}): {} ({}, lag: {})", topic, partition, key, new Timestamp(ts), time - ts);
 
         var fault = Fault.fromProto(event);
-        // fault.setNeId(eventKey.getSourceId());
+        // fault.setNeId(key.getSourceId());
         checkRule(fault);
     }
 
@@ -53,10 +53,10 @@ public class KafkaEventListener {
                 if (condition.evaluate(fault)) {
                     rule.handle(fault);
                 }
-                eventPublisher.publishEvent(new FaultAppEvent(this, fault));
             } catch (Exception e) {
                 log.error("Error checking rule on fault", e);
             }
         });
+        eventPublisher.publishEvent(new FaultAppEvent(this, fault));
     }
 }

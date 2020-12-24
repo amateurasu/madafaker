@@ -24,8 +24,9 @@ public abstract class StringCondition extends ObjectCondition {
 
     public static StringCondition of(String fields, String op, String value) throws JsonParseException {
         switch (op) {
-            case "alike": return new ALIKE(fields, value);
-            case "match": return new MATCH(fields, value);
+            case "contains": return new CONTAINS(fields, value);
+            // case "alike": return new ALIKE(fields, value);
+            // case "match": return new MATCH(fields, value);
             default:
                 throw new JsonParseException(null, "Expect string comparison expression but got '" + op + '\'');
         }
@@ -73,12 +74,8 @@ public abstract class StringCondition extends ObjectCondition {
         @Override
         public <T> boolean evaluate(ObjectReflect<T> reflect) throws Exception {
             var field = reflect.getValue(expression).toString();
-            return match(field, value);
-        }
-
-        private static boolean match(String s1, String s2) {
-            for (String s : new WordIterable(s1)) {
-                if (s2.contains(s)) return true;
+            for (String s : new WordIterable(field)) {
+                if (value.contains(s)) return true;
             }
 
             return false;

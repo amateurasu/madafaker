@@ -3,8 +3,8 @@ import org.gradle.internal.os.OperatingSystem
 
 fun nexus(host: String, port: Int = 8000) = uri("http://$host:$port/repository/maven/")
 repositories {
-    // mavenCentral()
-    maven { url = nexus("172.16.28.46") }
+    mavenCentral()
+    // maven { url = nexus("172.16.28.46") }
 }
 
 val os: OperatingSystem = OperatingSystem.current()
@@ -33,9 +33,9 @@ subprojects {
     }
 
     repositories {
-        // mavenCentral()
-        // maven { url = uri("https://packages.confluent.io/maven/") }
-        maven { url = nexus("172.16.28.46") }
+        mavenCentral()
+        maven { url = uri("https://packages.confluent.io/maven/") }
+        // maven { url = nexus("172.16.28.46") }
     }
 
     dependencies {

@@ -25,7 +25,7 @@ public class AlarmController_v1_0 {
     private final JdbcTemplate jdbc;
     private final Fault.Mapper faultMapper;
 
-    @GetMapping("/")
+    @GetMapping
     public Map<String, ?> getCurrentAlarms(@RequestBody FilterRequest filter) {
         return fetchAlarm(filter, "");
     }

@@ -1,4 +1,6 @@
-GET http://{{host}}:8090/subjects
+
+###
+GET http://{{host}}:8081/subjects
 
 ###
 GET http://{{host}}:8081/subjects/{{subject}}/versions
@@ -11,7 +13,7 @@ POST http://{{host}}:8081/subjects/{{subject}}/versions
 Content-Type: application/json
 
 {
-    "schema": "syntax = \"proto3\";\npackage org.onap.ves;\n\noption java_package = \"org.onap.ves\";\noption java_outer_classname = \"EventKey\";\n\nmessage Key {\n  string eventId = 1;\n  string sourceId = 2;\n  int64 initialInstant = 3;\n}",
+    "schema": "syntax = \"proto3\";\npackage org.onap.ves;\n\noption java_package = \"org.onap.ves\";\noption java_outer_classname = \"EventKey\";\n\nmessage Key {\n  int32  siteId         = 1;\n  int32  neId           = 2;\n  string eventCode      = 3;\n  int64  initialInstant = 4;\n}",
     "schemaType": "PROTOBUF"
 }
 
