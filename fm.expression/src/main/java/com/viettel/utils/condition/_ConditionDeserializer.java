@@ -15,10 +15,10 @@ import java.util.ArrayList;
 import static com.fasterxml.jackson.core.JsonToken.*;
 
 @Deprecated
-public class _ConditionDeserializer extends JsonDeserializer<ICondition> {
+public class _ConditionDeserializer extends JsonDeserializer<Condition> {
 
     @Override
-    public ICondition deserialize(JsonParser parser, DeserializationContext ctxt) throws IOException {
+    public Condition deserialize(JsonParser parser, DeserializationContext ctxt) throws IOException {
         var token = parser.getCurrentToken();
         switch (token) {
             case START_OBJECT:
@@ -30,7 +30,7 @@ public class _ConditionDeserializer extends JsonDeserializer<ICondition> {
         }
     }
 
-    private ICondition parseObject(JsonParser parser) throws IOException {
+    private Condition parseObject(JsonParser parser) throws IOException {
         expect(parser, FIELD_NAME);
 
         var name = parser.getCurrentName();
@@ -44,15 +44,15 @@ public class _ConditionDeserializer extends JsonDeserializer<ICondition> {
         return expression;
     }
 
-    private ICondition parseLogic(JsonParser parser, String op) throws IOException {
+    private Condition parseLogic(JsonParser parser, String op) throws IOException {
         expect(parser, START_ARRAY);
         // expect(parser, END_ARRAY);
         return parseLogicAtStart(parser, op);
     }
 
-    private ICondition parseLogicAtStart(JsonParser parser, String op) throws IOException {
+    private Condition parseLogicAtStart(JsonParser parser, String op) throws IOException {
         var token = parser.getCurrentToken();
-        var list = new ArrayList<ICondition>();
+        var list = new ArrayList<Condition>();
 
         read_json:
         while ((token = parser.nextToken()) != null) {
@@ -71,7 +71,7 @@ public class _ConditionDeserializer extends JsonDeserializer<ICondition> {
         return list.isEmpty() ? null : LogicCondition.of(op, list);
     }
 
-    private ICondition parseCondition(JsonParser parser, String name) throws IOException {
+    private Condition parseCondition(JsonParser parser, String name) throws IOException {
         var token = parser.nextToken();
         switch (token) {
             case START_OBJECT:
@@ -90,7 +90,7 @@ public class _ConditionDeserializer extends JsonDeserializer<ICondition> {
         }
     }
 
-    private ICondition parseOperator(JsonParser parser, String name, String operator) throws IOException {
+    private Condition parseOperator(JsonParser parser, String name, String operator) throws IOException {
         switch (operator) {
             case "$eq": case "$gt": case "$ge": case "$lt": case "$le":
                 return parseComparable(parser, name, operator);
@@ -103,8 +103,8 @@ public class _ConditionDeserializer extends JsonDeserializer<ICondition> {
         }
     }
 
-    private ICondition parseComparable(JsonParser parser, String name, String op) throws IOException {
-        var compare = new ArrayList<ICondition>();
+    private Condition parseComparable(JsonParser parser, String name, String op) throws IOException {
+        var compare = new ArrayList<Condition>();
         JsonToken token;
         read_json:
         while ((token = parser.nextToken()) != null) {
@@ -137,7 +137,7 @@ public class _ConditionDeserializer extends JsonDeserializer<ICondition> {
         return compare.size() == 1 ? compare.get(0) : LogicCondition.of("$and", compare);
     }
 
-    private ICondition parseList(JsonParser parser, String name, String op) throws IOException {
+    private Condition parseList(JsonParser parser, String name, String op) throws IOException {
         var token = expect(parser, START_ARRAY);
         var list = new ArrayList<>();
 
@@ -163,7 +163,7 @@ public class _ConditionDeserializer extends JsonDeserializer<ICondition> {
         return ListCondition.of(op, name, list);
     }
 
-    private ICondition parseString(JsonParser parser, String name, String op) throws IOException {
+    private Condition parseString(JsonParser parser, String name, String op) throws IOException {
         try {
             expect(parser, VALUE_STRING);
             return StringCondition.of(op, name, parser.getValueAsString());

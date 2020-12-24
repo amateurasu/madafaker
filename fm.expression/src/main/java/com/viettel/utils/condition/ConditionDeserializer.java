@@ -15,10 +15,10 @@ import java.util.List;
 
 import static com.fasterxml.jackson.core.JsonToken.*;
 
-public class ConditionDeserializer extends JsonDeserializer<ICondition> {
+public class ConditionDeserializer extends JsonDeserializer<Condition> {
 
     @Override
-    public ICondition deserialize(JsonParser parser, DeserializationContext ctxt) throws IOException {
+    public Condition deserialize(JsonParser parser, DeserializationContext context) throws IOException {
         var token = parser.getCurrentToken();
         switch (token) {
             case START_ARRAY:
@@ -51,7 +51,7 @@ public class ConditionDeserializer extends JsonDeserializer<ICondition> {
         return list;
     }
 
-    private ICondition parseExpression(JsonParser parser) throws IOException {
+    private Condition parseExpression(JsonParser parser) throws IOException {
         JsonToken token;
         switch (token = parser.nextToken()) {
             case START_ARRAY:
@@ -63,7 +63,7 @@ public class ConditionDeserializer extends JsonDeserializer<ICondition> {
         }
     }
 
-    private ICondition parseExpressionContent(JsonParser parser) throws IOException {
+    private Condition parseExpressionContent(JsonParser parser) throws IOException {
         //field name
         expect(parser, VALUE_STRING);
         var name = parser.getValueAsString();
@@ -78,7 +78,7 @@ public class ConditionDeserializer extends JsonDeserializer<ICondition> {
         return exp;
     }
 
-    private ICondition parseExpressionGroup(JsonParser parser) throws IOException {
+    private Condition parseExpressionGroup(JsonParser parser) throws IOException {
         JsonToken token;
         String field = null;
         String name = null;
@@ -111,7 +111,7 @@ public class ConditionDeserializer extends JsonDeserializer<ICondition> {
         return LogicGroupCondition.of(name, expressions);
     }
 
-    private ICondition parseValue(JsonParser parser, String name, String operator) throws IOException {
+    private Condition parseValue(JsonParser parser, String name, String operator) throws IOException {
         switch (operator) {
             case "eq": case "gt": case "ge": case "lt": case "le": case "ne":
                 return parseComparable(parser, name, operator);
@@ -124,7 +124,7 @@ public class ConditionDeserializer extends JsonDeserializer<ICondition> {
         }
     }
 
-    private ICondition parseComparable(JsonParser parser, String name, String op) throws IOException {
+    private Condition parseComparable(JsonParser parser, String name, String op) throws IOException {
         var token = parser.nextToken();
 
         switch (token) {
@@ -145,12 +145,12 @@ public class ConditionDeserializer extends JsonDeserializer<ICondition> {
         }
     }
 
-    private ICondition parseString(JsonParser parser, String name, String op) throws IOException {
+    private Condition parseString(JsonParser parser, String name, String op) throws IOException {
         expect(parser, VALUE_STRING);
         return StringCondition.of(name, op, parser.getValueAsString());
     }
 
-    private ICondition parseList(JsonParser parser, String name, String op) throws IOException {
+    private static Condition parseList(JsonParser parser, String name, String op) throws IOException {
         var token = expect(parser, START_ARRAY);
         var list = new ArrayList<>();
 
@@ -175,7 +175,7 @@ public class ConditionDeserializer extends JsonDeserializer<ICondition> {
         return ListCondition.of(name, op, list);
     }
 
-    private Comparable<?> parseTime(String time) {
+    private static Comparable<?> parseTime(String time) {
         try {
             var epoch = Long.parseLong(time);
             var instant = Instant.ofEpochMilli(epoch);
@@ -206,7 +206,7 @@ public class ConditionDeserializer extends JsonDeserializer<ICondition> {
         return null;
     }
 
-    private JsonToken expect(JsonParser parser, JsonToken expect) throws IOException {
+    private static JsonToken expect(JsonParser parser, JsonToken expect) throws IOException {
         var token = parser.nextToken();
         if (token != expect) {
             if (token == VALUE_STRING || token == FIELD_NAME) {

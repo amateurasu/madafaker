@@ -3,8 +3,8 @@ import org.gradle.internal.os.OperatingSystem
 
 fun nexus(host: String, port: Int = 8000) = uri("http://$host:$port/repository/maven/")
 repositories {
-    mavenCentral()
-    // maven { url = nexus("172.16.28.46") }
+    // mavenCentral()
+    maven { url = nexus("172.16.28.46") }
 }
 
 val os: OperatingSystem = OperatingSystem.current()
@@ -33,9 +33,9 @@ subprojects {
     }
 
     repositories {
-        mavenCentral()
-        maven { url = uri("https://packages.confluent.io/maven/") }
-        // maven { url = nexus("172.16.28.46") }
+        // mavenCentral()
+        // maven { url = uri("https://packages.confluent.io/maven/") }
+        maven { url = nexus("172.16.28.46") }
     }
 
     dependencies {
@@ -63,5 +63,24 @@ subprojects {
 
     tasks.test {
         useJUnitPlatform()
+    }
+
+    tasks.withType<JavaCompile> {
+        doLast {
+            val folder = File("$projectDir/build/libs/").apply { mkdirs() }
+            val name = project.name
+            val version = project.version
+
+            File(folder, "Dockerfile").writeText(
+                """
+                FROM openjdk:11.0.7-jre
+                LABEL maintainer="duclm22@viettel.com.vn"
+                COPY ./$name-$version.jar /opt/ems/
+                RUN echo "Asia/Ho_Chi_Minh" > /etc/timezone
+                CMD ["java", "-jar", "-Dspring.profiles.active=production", "/opt/ems/$name-$version.jar"]
+                """.trimIndent())
+
+            File(folder, "build").writeText("docker build -t ems/${name}:$version .")
+        }
     }
 }

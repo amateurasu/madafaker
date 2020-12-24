@@ -3,7 +3,7 @@ package com.viettel.utils.condition.logic;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.viettel.utils.condition.ICondition;
+import com.viettel.utils.condition.Condition;
 import com.viettel.utils.condition.Query;
 import com.viettel.utils.condition.reflection.ObjectReflect;
 import com.viettel.utils.condition.reflection.Reflect;
@@ -18,11 +18,11 @@ import java.util.List;
 @Setter
 @Slf4j
 @AllArgsConstructor
-public abstract class LogicCondition implements ICondition {
+public abstract class LogicCondition implements Condition {
 
-    protected List<ICondition> conditions;
+    protected List<Condition> conditions;
 
-    public static LogicCondition of(String op, List<ICondition> conditions) throws JsonParseException {
+    public static LogicCondition of(String op, List<Condition> conditions) throws JsonParseException {
         switch (op) {
             case "and": return new AND(conditions);
             case "or": return new OR(conditions);
@@ -41,7 +41,7 @@ public abstract class LogicCondition implements ICondition {
     }
 
     public static class AND extends LogicCondition {
-        public AND(List<ICondition> conditions) {
+        public AND(List<Condition> conditions) {
             super(conditions);
         }
 
@@ -82,7 +82,7 @@ public abstract class LogicCondition implements ICondition {
     }
 
     public static class OR extends LogicCondition {
-        public OR(List<ICondition> conditions) {
+        public OR(List<Condition> conditions) {
             super(conditions);
         }
 

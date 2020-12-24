@@ -6,6 +6,7 @@ import com.viettel.ems.model.FilterRequest;
 import com.viettel.ems.model.entity.Fault;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.lang.NonNull;
@@ -56,6 +57,8 @@ public class AlarmController_v1_0 {
             var size = filter.getPageSize();
             size = size == 0 ? 50 : size;
 
+            log.debug(predicate);
+
             var query = filter.getCondition()
                 .buildQuery(Fault.class, predicate)
                 .append(" LIMIT " + size + " OFFSET " + page * size);
@@ -64,10 +67,10 @@ public class AlarmController_v1_0 {
             var sql = query.getSql();
             log.info("Query: \n\t{}\n\t{}", sql, params);
             var faults = jdbc.query(sql, params, faultMapper);
-            return Map.of("page", page, "page_size", size, "data", faults);
+            return Map.of("page", page, "page_size", size, "data", faults, "data_size", faults.size());
         } catch (Exception e) {
             log.error("Couldn't fetch alarm", e);
-            return Map.of("message", e.getMessage());
+            return Map.of("message", String.valueOf(e.getMessage()));
         }
     }
 

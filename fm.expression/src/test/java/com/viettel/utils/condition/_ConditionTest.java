@@ -58,13 +58,13 @@ public class _ConditionTest {
     @Benchmark
     public void conditionBenchmark(Blackhole bh) throws JsonProcessingException {
         var mapper = new ObjectMapper();
-        bh.consume(mapper.readValue(json, new TypeReference<ICondition>() { }));
+        bh.consume(mapper.readValue(json, new TypeReference<Condition>() { }));
     }
 
     @Test
     public void conditionEvaluationTest() throws Exception {
         var mapper = new ObjectMapper();
-        var condition = mapper.readValue(json, new TypeReference<ICondition>() { });
+        var condition = mapper.readValue(json, new TypeReference<Condition>() { });
         var evaluate = condition.evaluate(item);
         log.info("evaluate {}", evaluate);
     }
@@ -72,7 +72,7 @@ public class _ConditionTest {
     @Test
     public void conditionQueryTest() throws Exception {
         var mapper = new ObjectMapper();
-        var condition = mapper.readValue(json, new TypeReference<ICondition>() { });
+        var condition = mapper.readValue(json, new TypeReference<Condition>() { });
         log.info("condition {}", condition);
 
         var query = condition.buildQuery(new Query<Item>(Item.class));

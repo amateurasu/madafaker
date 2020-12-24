@@ -4,30 +4,36 @@ import com.viettel.utils.condition.reflection.Reflect;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Data
-@RequiredArgsConstructor
 public class Query<T> {
+
+    private final Reflect reflect;
+    private List<String> fields;
 
     private final StringBuilder sql = new StringBuilder();
     private final List<Object> params = new ArrayList<>();
 
-    private final Reflect reflect;
+    public Query(Reflect reflect) {
+        this.reflect = reflect;
+    }
+
+    public static <T> Query<T> from(Class<T> table) {
+        return new Query<>(new Reflect(table));
+    }
+
+    public String getSql() {
+        return sql.toString();
+    }
 
     public Query(Class<?> klass) {
         this(new Reflect(klass));
     }
 
     public Query<T> select(String... fields) {
-
+        this.fields = Arrays.asList(fields);
         return this;
-    }
-
-    public String getSql() {
-        return sql.toString();
     }
 
     public Object[] getParamArray() {

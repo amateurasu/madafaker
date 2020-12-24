@@ -7,7 +7,7 @@ import com.viettel.utils.condition.reflection.ObjectReflect;
 import com.viettel.utils.condition.reflection.Reflect;
 
 @JsonDeserialize(using = ConditionDeserializer.class)
-public interface ICondition {
+public interface Condition {
 
     <T> boolean evaluate(ObjectReflect<T> reflect) throws Exception;
 

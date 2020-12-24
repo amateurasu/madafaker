@@ -1,9 +1,9 @@
 rootProject.name = "fm"
 
 pluginManagement {
-    // repositories {
-    //     maven("http://172.16.28.46:8000/repository/maven/")
-    // }
+    repositories {
+        maven("http://172.16.28.46:8000/repository/maven/")
+    }
 
     resolutionStrategy {
         eachPlugin {

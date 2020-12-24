@@ -1,5 +1,5 @@
 
-### New format
+### Raise a new format alarm
 POST http://{{host}}:8080/fm/v1.0/event
 Content-Type: application/json
 

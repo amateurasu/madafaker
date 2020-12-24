@@ -3,7 +3,7 @@ package com.viettel.utils.condition.logic;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.viettel.utils.condition.ICondition;
+import com.viettel.utils.condition.Condition;
 import com.viettel.utils.condition.Query;
 import com.viettel.utils.condition.reflection.ObjectReflect;
 import com.viettel.utils.condition.reflection.Reflect;
@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 
 @Slf4j
-public class LogicGroupCondition implements ICondition {
+public class LogicGroupCondition implements Condition {
     private final String name;
     private final List<LogicWrapper> logics;
     private final int size;
@@ -32,7 +32,7 @@ public class LogicGroupCondition implements ICondition {
         start = i;
     }
 
-    public static ICondition of(String name, List<LogicWrapper> list) {
+    public static Condition of(String name, List<LogicWrapper> list) {
         return new LogicGroupCondition(name, list);
     }
 

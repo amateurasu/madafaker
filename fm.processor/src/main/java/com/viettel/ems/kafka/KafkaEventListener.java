@@ -5,7 +5,6 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.viettel.ems.model.cache.RuleCache;
 import com.viettel.ems.model.entity.Fault;
 import com.viettel.ems.model.event.FaultAppEvent;
-import com.viettel.utils.condition.ICondition;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.onap.ves.DCAE;

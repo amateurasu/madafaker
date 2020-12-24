@@ -33,23 +33,13 @@ dependencies {
 
 tasks.getByName<BootJar>("bootJar") {
     mainClassName = "com.viettel.ems.API"
-
     doLast {
-        val folder = File("$projectDir/build/libs/").apply { mkdirs() }
-        val name = project.name
-        val version = project.version
-
-        File(folder, "Dockerfile").writeText(
-            """
-            FROM openjdk:11.0.7-jre
-            LABEL maintainer="duclm22@viettel.com.vn"
-            COPY ./$name-$version.jar /opt/ems/
-            RUN echo "Asia/Ho_Chi_Minh" > /etc/timezone
-            CMD ["java", "-jar", "-Dspring.profiles.active=production", "/opt/ems/$name-$version.jar"]
-            """.trimIndent())
-
-        File(folder, "docker.sh").writeText("docker build -t ems/${name}:$version .")
+        File("$projectDir/build/libs/", "run").writeText("docker build -t ems/${project.name}:${project.version} .")
     }
+}
+
+tasks.register("build-profile") {
+    dependsOn("bootJar")
 }
 
 tasks.getByName<BootRun>("bootRun") {

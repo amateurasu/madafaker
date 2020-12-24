@@ -4,9 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.viettel.ems.model.entity.Event;
-import com.viettel.ems.model.entity.Fault;
 import com.viettel.utils.condition.Column;
-import com.viettel.utils.condition.ICondition;
+import com.viettel.utils.condition.Condition;
 import com.viettel.utils.condition.Table;
 import lombok.Data;
 
@@ -33,7 +32,7 @@ public class Rule {
     private String conditionJson;
 
     private EffectiveTimeRange timeRange;
-    private ICondition condition;
+    private Condition condition;
 
     public void setConditionJson(String json) {
         this.conditionJson = json;

@@ -1,7 +1,7 @@
 package com.viettel.ems.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.viettel.utils.condition.ICondition;
+import com.viettel.utils.condition.Condition;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -9,6 +9,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class FilterRequest extends Pagination {
 
-    @JsonProperty("filter")
-    private ICondition condition;
+    @JsonProperty("filters")
+    private Condition condition;
 }

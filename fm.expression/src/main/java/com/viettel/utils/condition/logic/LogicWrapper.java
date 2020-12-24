@@ -3,18 +3,18 @@ package com.viettel.utils.condition.logic;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.viettel.utils.condition.ICondition;
+import com.viettel.utils.condition.Condition;
 import com.viettel.utils.condition.Query;
 import com.viettel.utils.condition.reflection.ObjectReflect;
 import com.viettel.utils.condition.reflection.Reflect;
 import lombok.Data;
 
 @Data
-public class LogicWrapper implements ICondition {
+public class LogicWrapper implements Condition {
     private final String operator;
-    private final ICondition condition;
+    private final Condition condition;
 
-    public static LogicWrapper of(String name, ICondition condition) throws JsonParseException {
+    public static LogicWrapper of(String name, Condition condition) throws JsonParseException {
         switch (name) {
             case "start":
             case "and":

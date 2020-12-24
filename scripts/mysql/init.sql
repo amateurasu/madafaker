@@ -31,14 +31,19 @@ CREATE TABLE IF NOT EXISTS ne (
 
 
 CREATE TABLE IF NOT EXISTS event_category (
-    id           INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    code         VARCHAR(40) COMMENT 'pre-defined',
-    site_id      INT UNSIGNED  NOT NULL,
-    name         VARCHAR(128)  NOT NULL,
-    message      VARCHAR(1000) NULL,
-    ems_severity ENUM ('NORMAL', 'WARNING', 'MINOR', 'MAJOR', 'CRITICAL'),
-    timeout      INT UNSIGNED  NULL,
-    is_fault     BOOLEAN       NOT NULL,
+    id             INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    code           VARCHAR(40) COMMENT 'pre-defined',
+    site_id        INT UNSIGNED  NOT NULL,
+    name           VARCHAR(128)  NOT NULL,
+    message        VARCHAR(1000) NULL,
+    ems_severity   ENUM ('NORMAL', 'WARNING', 'MINOR', 'MAJOR', 'CRITICAL'),
+    timeout        INT UNSIGNED  NULL,
+    is_fault       BOOLEAN       NOT NULL,
+
+    created_by     VARCHAR(40),
+    updated_by     VARCHAR(40),
+    create_instant DATETIME,
+    update_instant DATETIME,
 
     UNIQUE (code, site_id),
     FOREIGN KEY (site_id) REFERENCES ne_site (id) ON DELETE CASCADE,

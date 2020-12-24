@@ -2,12 +2,12 @@ package com.viettel.utils.condition.logic;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.viettel.utils.condition.ICondition;
+import com.viettel.utils.condition.Condition;
 import com.viettel.utils.condition.reflection.Reflect;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public abstract class ObjectCondition implements ICondition {
+public abstract class ObjectCondition implements Condition {
 
     protected final String expression;
 
