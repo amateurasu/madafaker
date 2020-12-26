@@ -72,7 +72,7 @@ public abstract class ComparableCondition<C> extends ObjectCondition {
 
         @Override
         public <T> Query<T> buildQuery(Query<T> query) throws Exception {
-            return query.field(expression).append(" = ?").addParam(value);
+            return query.field(expression).append(" != ?").addParam(value);
         }
 
         @Override

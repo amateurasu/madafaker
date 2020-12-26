@@ -26,27 +26,27 @@ public class AlarmController_v1_0 {
     private final JdbcTemplate jdbc;
     private final Fault.Mapper faultMapper;
 
-    @GetMapping
+    @PostMapping
     public Map<String, ?> getCurrentAlarms(@RequestBody FilterRequest filter) {
         return fetchAlarm(filter, "");
     }
 
-    @GetMapping("/current")
+    @PostMapping("/current")
     public Map<String, ?> getCurrentAlarm(@RequestBody FilterRequest filter) {
         return fetchAlarm(filter, "cleared_by IS NULL AND isolated = FALSE AND event_id IS NOT NULL");
     }
 
-    @GetMapping("/history")
+    @PostMapping("/history")
     public Map<String, ?> getAlarmHistory(@RequestBody FilterRequest filter) {
         return fetchAlarm(filter, "cleared_by IS NOT NULL AND event_id IS NOT NULL");
     }
 
-    @GetMapping("/isolated")
+    @PostMapping("/isolated")
     public Map<String, ?> getIsolatedAlarm(@RequestBody FilterRequest filter) {
         return fetchAlarm(filter, "cleared_by IS NULL AND isolated = TRUE AND event_id IS NOT NULL");
     }
 
-    @GetMapping("/unknown")
+    @PostMapping("/unknown")
     public Map<String, ?> getUnknownAlarm(@RequestBody FilterRequest filter) {
         return fetchAlarm(filter, "event_id IS NULL");
     }
@@ -56,8 +56,6 @@ public class AlarmController_v1_0 {
             var page = filter.getPage();
             var size = filter.getPageSize();
             size = size == 0 ? 50 : size;
-
-            log.debug(predicate);
 
             var query = filter.getCondition()
                 .buildQuery(Fault.class, predicate)

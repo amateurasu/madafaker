@@ -30,7 +30,7 @@ public class ConditionDeserializer extends JsonDeserializer<Condition> {
         }
     }
 
-    private List<LogicWrapper> parseExpressions(JsonParser parser) throws IOException {
+    private static List<LogicWrapper> parseExpressions(JsonParser parser) throws IOException {
         var list = new ArrayList<LogicWrapper>();
         JsonToken token;
 
@@ -51,7 +51,7 @@ public class ConditionDeserializer extends JsonDeserializer<Condition> {
         return list;
     }
 
-    private Condition parseExpression(JsonParser parser) throws IOException {
+    private static Condition parseExpression(JsonParser parser) throws IOException {
         JsonToken token;
         switch (token = parser.nextToken()) {
             case START_ARRAY:
@@ -63,7 +63,7 @@ public class ConditionDeserializer extends JsonDeserializer<Condition> {
         }
     }
 
-    private Condition parseExpressionContent(JsonParser parser) throws IOException {
+    private static Condition parseExpressionContent(JsonParser parser) throws IOException {
         //field name
         expect(parser, VALUE_STRING);
         var name = parser.getValueAsString();
@@ -78,7 +78,7 @@ public class ConditionDeserializer extends JsonDeserializer<Condition> {
         return exp;
     }
 
-    private Condition parseExpressionGroup(JsonParser parser) throws IOException {
+    private static Condition parseExpressionGroup(JsonParser parser) throws IOException {
         JsonToken token;
         String field = null;
         String name = null;
@@ -111,7 +111,7 @@ public class ConditionDeserializer extends JsonDeserializer<Condition> {
         return LogicGroupCondition.of(name, expressions);
     }
 
-    private Condition parseValue(JsonParser parser, String name, String operator) throws IOException {
+    private static Condition parseValue(JsonParser parser, String name, String operator) throws IOException {
         switch (operator) {
             case "eq": case "gt": case "ge": case "lt": case "le": case "ne":
                 return parseComparable(parser, name, operator);
@@ -124,7 +124,7 @@ public class ConditionDeserializer extends JsonDeserializer<Condition> {
         }
     }
 
-    private Condition parseComparable(JsonParser parser, String name, String op) throws IOException {
+    private static Condition parseComparable(JsonParser parser, String name, String op) throws IOException {
         var token = parser.nextToken();
 
         switch (token) {
@@ -145,7 +145,7 @@ public class ConditionDeserializer extends JsonDeserializer<Condition> {
         }
     }
 
-    private Condition parseString(JsonParser parser, String name, String op) throws IOException {
+    private static Condition parseString(JsonParser parser, String name, String op) throws IOException {
         expect(parser, VALUE_STRING);
         return StringCondition.of(name, op, parser.getValueAsString());
     }

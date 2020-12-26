@@ -23,12 +23,12 @@ public class EventController_v1_0 {
     private final JdbcTemplate jdbc;
     private final Notification.Mapper eventMapper;
 
-    @GetMapping(path = "/history")
+    @PostMapping(path = "/history")
     public Map<String, ?> getEventHistory(@RequestBody FilterRequest filter) {
         return fetchNotification(filter, "isolated = FALSE");
     }
 
-    @GetMapping(path = "/isolated")
+    @PostMapping(path = "/isolated")
     public Map<String, ?> getIsolatedEvents(@RequestBody FilterRequest filter) {
         return fetchNotification(filter, "isolated = TRUE");
     }

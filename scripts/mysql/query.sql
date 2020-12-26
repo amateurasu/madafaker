@@ -1,6 +1,16 @@
 SELECT
-    ne.id, ne.name, ne.ip, ne.site_id, ns.id, ns.name, ns.system_type_id, ns.request_limit, ns.time_limit, ns.time_unit,
-    st.id, st.name
+    ne.id,
+    ne.name,
+    ne.ip,
+    ne.site_id,
+    ns.id,
+    ns.name,
+    ns.system_type_id,
+    ns.request_limit,
+    ns.time_limit,
+    ns.time_unit,
+    st.id,
+    st.name
 FROM ne
          JOIN ne_site ns ON ns.id = ne.site_id
          JOIN system_type st ON st.id = ns.system_type_id
@@ -25,5 +35,5 @@ WHERE
 
 SELECT * FROM fault WHERE cleared_by IS NULL AND event_id IS NOT NULL AND TRUE LIMIT 10 OFFSET 0;
 
-SELECT INSTR('xbar', 'foobar');
+SELECT  FROM fault WHERE event_category <> "event_category";
 

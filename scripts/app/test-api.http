@@ -26,7 +26,7 @@ Content-Type: application/json
 }
 
 ### Alarm History
-GET http://{{host}}:8090/fm/v1.0/alarm/history
+POST http://{{host}}:9000/fm/v1.0/alarm/history
 Content-Type: application/json
 
 {
@@ -37,6 +37,8 @@ Content-Type: application/json
 
     ]
 }
+
+
 
 
 

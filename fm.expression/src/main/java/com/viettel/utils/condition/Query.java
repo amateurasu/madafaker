@@ -86,4 +86,9 @@ public class Query<T> {
     public String getField(String field) throws NoSuchFieldException {
         return reflect.getField(field);
     }
+
+    public Query<T> build() {
+
+        return this;
+    }
 }
