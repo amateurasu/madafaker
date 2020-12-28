@@ -156,8 +156,8 @@ public class Event {
     @Column(name = "isolation_history")
     private String isolationHistory;
 
-    public static <T extends Event> T fromProto(DCAE.VesEvent vesEvent, T event) {
-        var header = vesEvent.getEvent().getCommonEventHeader();
+    public static <T extends Event> T fromProto(DCAE.Event evt, T event) {
+        var header = evt.getCommonEventHeader();
         var tz = header.getTimeZoneOffset();
         var trigger = TimeUtils.fromMicros(header.getLastEpochMicrosec(), tz);
         var initial = TimeUtils.fromMicros(header.getStartEpochMicrosec(), tz);
@@ -169,17 +169,22 @@ public class Event {
         event.setNfNamingCode(header.getNfNamingCode());
         event.setNfVendorName(header.getNfVendorName());
         event.setPriority(header.getPriority().toString());
+
         event.setReportingEntityId(header.getReportingEntityId());
         event.setReportingEntityName(header.getReportingEntityName());
+
         event.setSequence(header.getSequence());
         event.setSourceId(header.getSourceId());
         event.setSourceName(header.getSourceName());
+
         event.setTriggerInstant(trigger);
         event.setTriggerDate(trigger.toLocalDate());
         event.setTriggerTime(trigger.toLocalTime());
+
         event.setInitialInstant(initial);
         event.setInitialDate(initial.toLocalDate());
         event.setInitialTime(initial.toLocalTime());
+
         event.setStndDefinedNamespace(header.getStndDefinedNamespace());
         event.setVersion(header.getVersion());
         event.setVesEventListenerVersion(header.getVesEventListenerVersion());

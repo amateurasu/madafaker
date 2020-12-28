@@ -1,21 +1,37 @@
+http://{{host}}:8100/schemas/types
 
 ###
-GET http://{{host}}:8081/subjects
+GET http://{{host}}:8100/subjects
 
 ###
-GET http://{{host}}:8081/subjects/{{subject}}/versions
+GET http://{{host}}:8100/subjects/fault-key/versions
 
 ###
-GET http://{{host}}:8081/subjects/{{subject}}/versions/latest/schema
+GET http://{{host}}:8100/subjects/fault-key/versions/latest/schema
 
 ###
-POST http://{{host}}:8081/subjects/{{subject}}/versions
+POST http://{{host}}:8100/subjects/fault-key/versions
 Content-Type: application/json
 
 {
-    "schema": "syntax = \"proto3\";\npackage org.onap.ves;\n\noption java_package = \"org.onap.ves\";\noption java_outer_classname = \"EventKey\";\n\nmessage Key {\n  int32  siteId         = 1;\n  int32  neId           = 2;\n  string eventCode      = 3;\n  int64  initialInstant = 4;\n}",
-    "schemaType": "PROTOBUF"
+    "schemaType": "PROTOBUF",
+    "schema": "syntax = \"proto3\";\npackage org.onap.ves;\n\noption java_package = \"org.onap.ves\";\noption java_outer_classname = \"EventKey\";\n\nmessage Key {\n  int32  siteId         = 1;\n  int32  neId           = 2;\n  string eventCode      = 3;\n  int64  initialInstant = 4;\n}"
 }
 
 ###
-DELETE http://{{host}}:8081/subjects/{{subject}}/versions/?permanent=true
+GET http://{{host}}:8100/subjects/fault-value/versions
+
+###
+GET http://{{host}}:8100/subjects/fault-value/versions/latest/schema
+
+###
+POST http://{{host}}:8100/subjects/fault-value/versions
+Content-Type: application/json
+
+{
+    "schemaType": "PROTOBUF",
+    "schema": "syntax = \"proto3\"; package org.onap.ves; option java_package = \"org.onap.ves\"; option java_outer_classname = \"DCAE\"; message VesEvent { Event event = 1; } message VesEventList { repeated Event event = 1; } message Event { CommonEventHeader commonEventHeader = 1; oneof eventFields { FaultFields faultFields = 2; NotificationFields notificationFields = 3; } message CommonEventHeader { string domain = 1; string eventId = 2; string eventName = 3; string eventType = 4; int64 lastEpochMicrosec = 5; string nfcNamingCode = 6; string nfNamingCode = 7; string nfVendorName = 8; Priority priority = 9; string reportingEntityId = 10; string reportingEntityName = 11; int32 sequence = 12; string sourceId = 13; string sourceName = 14; int64 startEpochMicrosec = 15; string stndDefinedNamespace = 16; string timeZoneOffset = 17; string version = 18; string vesEventListenerVersion = 19; reserved \"InternalHeaderFields\"; reserved 100; } message FaultFields { map<string, string> alarmAdditionalInformation = 1; string alarmCondition = 2; string alarmInterfaceA = 3; string eventCategory = 4; string eventSeverity = 5; string eventSourceType = 6; string faultFieldsVersion = 7; string specificProblem = 8; string vfStatus = 9; } message NotificationFields { map<string,string> additionalFields = 1; repeated NamedHashMap arrayOfNamedHashMap = 2; string changeContact = 3; string changeIdentifier = 4; string changeType = 5; string newState = 6; string notificationFieldsVersion = 7; string oldState = 8; string stateInterface = 9; } message NamedHashMap { string name = 1; map<string, string> hashMap = 2; } enum Priority { PRIORITY_NOT_PROVIDED = 0; HIGH = 1; MEDIUM = 2; NORMAL = 3; LOW = 4; } }"
+}
+
+###
+DELETE http://{{host}}:8100/subjects/fault-key/versions/?permanent=true

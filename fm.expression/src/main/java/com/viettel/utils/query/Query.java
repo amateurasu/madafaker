@@ -7,15 +7,15 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class Query {
+public class Query<T> {
 
     @JsonProperty("fields")
     private List<String> fields;
 
-    private Condition filter;
+    private Condition condition;
 
 
-    public Query build() {
+    public Query<T> build() {
 
         return this;
     }

@@ -1,7 +1,7 @@
 package com.viettel.ems.service;
 
 import com.viettel.ems.model.entity.Event;
-import com.viettel.ems.model.event.FaultAppEvent;
+import com.viettel.ems.model.event.NewMessageAppEvent;
 import com.viettel.ems.model.event.NotificationAppEvent;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,8 +22,8 @@ public class NotifyService {
 
     @Async
     @EventListener
-    public void notifyFault(FaultAppEvent appEvent) {
-        var fault = appEvent.getFault();
+    public void notifyFault(NewMessageAppEvent appEvent) {
+        var fault = appEvent.getEvent();
         notify(fault);
     }
 
@@ -55,17 +55,3 @@ public class NotifyService {
         //@formatter:on
     }
 }
-
-//{
-//     "listEmail": [
-//         "duclm22@vttek.vn"
-//     ],
-//     "listPhone": [
-//         "84365819777"
-//     ],
-//     "metadata": {
-//         "subject": "This is Subject of Mail",
-//         "contentEmail": "This is Content of Mail",
-//         "contentSMS": "Nội dung tin nhắn nào đấy"
-//     }
-//}

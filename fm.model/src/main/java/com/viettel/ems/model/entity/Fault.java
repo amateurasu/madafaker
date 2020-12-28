@@ -87,9 +87,9 @@ public class Fault extends Event {
     @Column(name = "ack_time", db = "TIME(ack_instant)")
     private LocalTime ackTime;
 
-    public static Fault fromProto(DCAE.VesEvent vesEvent) {
-        var fault = Event.fromProto(vesEvent, new Fault());
-        var fields = vesEvent.getEvent().getFaultFields();
+    public static Fault fromProto(DCAE.Event event) {
+        var fault = Event.fromProto(event, new Fault());
+        var fields = event.getFaultFields();
 
         fault.setAdditionalInfo(fields.getAlarmAdditionalInformationMap());
         fault.setCondition(fields.getAlarmCondition());

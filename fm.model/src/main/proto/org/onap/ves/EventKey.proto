@@ -10,3 +10,4 @@ message Key {
   string eventCode      = 3;
   int64  initialInstant = 4;
 }
+

@@ -61,9 +61,9 @@ public class Notification extends Event {
     @Column(name = "state_interface")
     private String stateInterface;
 
-    public static Notification fromProto(DCAE.VesEvent event) {
+    public static Notification fromProto(DCAE.Event event) {
         var notification = Event.fromProto(event, new Notification());
-        var fields = event.getEvent().getNotificationFields();
+        var fields = event.getNotificationFields();
 
         notification.setAdditionalInfo(fields.getAdditionalFieldsMap());
         notification.setArrayOfNamedHashMap(fields.getArrayOfNamedHashMapList()

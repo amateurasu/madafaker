@@ -6,6 +6,12 @@ spring:
     web-application-type: reactive
 server:
   port: 8091
+
+message:
+  topic:
+    fault: fault
+    notification: notification
+
 ---
 spring:
   profiles: dev
@@ -17,13 +23,9 @@ kafka:
 
 ems:
   wm:
-    address: http://localhost:9000/wm/
+    address: http://127.0.0.1:9000/wm/
   cm:
-    address: http://localhost:9000/cm/
-
-message:
-  topic:
-    name: fault
+    address: http://127.0.0.1:9000/cm/
 
 ---
 spring:
@@ -36,13 +38,9 @@ kafka:
 
 ems:
   wm:
-    address: http://localhost:9000/wm/
+    address: http://127.0.0.1:9000/wm/
   cm:
-    address: http://localhost:9000/cm/
-
-message:
-  topic:
-    name: fault
+    address: http://127.0.0.1:9000/cm/
 
 ---
 spring:
@@ -55,9 +53,9 @@ kafka:
 
 ems:
   wm:
-    address: http://10.60.88.22:8085/warning/send
-
-message:
-  topic:
-    name: fault
+    address: http://10.60.88.22:8085
+    uri: /warning/send
+  cm:
+    address: http://172.16.28.46:8088
+    uri: /configuration/
 

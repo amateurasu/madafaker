@@ -189,11 +189,20 @@ CREATE TABLE IF NOT EXISTS param_code (
 );
 
 
-CREATE TABLE IF NOT EXISTS schedule_config (
+CREATE TABLE IF NOT EXISTS command_set (
     id            INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    cron_exp      VARCHAR(50),
+    name          VARCHAR(50),
     ne_list       VARCHAR(250),
     device_type   VARCHAR(50),
     stop_on_error BOOLEAN DEFAULT TRUE,
-    command_list  TEXT
+    commands      TEXT
 );
+
+CREATE TABLE IF NOT EXISTS schedule_config (
+    id          INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    cron_exp    VARCHAR(50),
+    command_set INT UNSIGNED,
+
+    FOREIGN KEY (command_set) REFERENCES command_set (id)
+);
+

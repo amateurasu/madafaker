@@ -1,0 +1,34 @@
+POST http://172.16.28.46:8088/configuration/5ga
+Content-Type: application/json
+Authorization: Basic ZHVjbG0yMjpwYXNzd29yZA==
+
+{
+    "list_command": [
+        "SHW CELL: ;",
+        "SHW CELL: ;"
+    ],
+    "list_ne": [
+        "172.16.31.211"
+    ],
+    "stop_on_error": "true",
+    "device_type": "5GA"
+}
+
+### WARNING
+POST http://10.60.88.22:8085/warning/send
+Content-Type: application/json
+
+{
+    "listEmail": [
+        "duclm22@vttek.vn"
+    ],
+    "listPhone": [
+        "84365819777"
+    ],
+    "metadata": {
+        "subject": "Some subjects",
+        "contentEmail": "Some email contents",
+        "contentSMS": "Some contents for SMS"
+    }
+}
+

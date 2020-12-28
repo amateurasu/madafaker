@@ -1,7 +1,6 @@
 package com.viettel.ems.scheduler;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.viettel.ems.utils.ScheduleConfigSerializer;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.jdbc.core.RowMapper;
@@ -15,14 +14,20 @@ import static com.viettel.ems.utils.StringUtils.split;
 
 @Data
 @Builder
-@JsonSerialize(using = ScheduleConfigSerializer.class)
 public class ScheduleConfig {
 
     private int id;
-    private String cronExpression;
+
+    @JsonProperty("list_command")
     private List<String> commandList;
+
+    @JsonProperty("list_ne")
     private List<String> neIpList;
+
+    @JsonProperty("device_type")
     private String deviceType;
+
+    @JsonProperty("stop_on_error")
     private boolean stopOnError;
 
     @Component
@@ -31,7 +36,6 @@ public class ScheduleConfig {
         public ScheduleConfig mapRow(ResultSet rs, int rowNum) throws SQLException {
             return ScheduleConfig.builder()
                 .id(rs.getInt("id"))
-                .cronExpression(rs.getString("cron_exp"))
                 .neIpList(split(rs.getString("ne_list"), ","))
                 .deviceType(rs.getString("device_type"))
                 .stopOnError(rs.getBoolean("stop_on_error"))

@@ -34,17 +34,9 @@ public class RateLimitFilter implements WebFilter {
 
     @PostConstruct
     public void fetchConfig() {
-        var KEYS = new String[] {
-            "fm.threshold.ne.critical",
-            "fm.threshold.ne.major",
-            "fm.threshold.ne.minor",
-            "fm.threshold.ne.warning",
-            "fm.threshold.system.critical",
-            "fm.threshold.system.major",
-            "fm.threshold.system.minor",
-            "fm.threshold.system.value",
-            "fm.threshold.system.warning",
-            };
+        var KEYS = List.of("fm.threshold.ne.critical", "fm.threshold.ne.major", "fm.threshold.ne.minor",
+            "fm.threshold.ne.warning", "fm.threshold.system.critical", "fm.threshold.system.major",
+            "fm.threshold.system.minor", "fm.threshold.system.value", "fm.threshold.system.warning");
 
         var params = Map.of("keys", KEYS);
         var hashMap = namedJdbc.query("SELECT `key`, `value` FROM param_code WHERE `key` IN (:keys)", params, (rs) -> {
@@ -52,12 +44,10 @@ public class RateLimitFilter implements WebFilter {
             while (rs.next()) {
                 var key = rs.getString("key");
                 var value = rs.getString("value");
-                log.info("key {}, value {}", key, value);
                 map.put(key, value);
             }
             return map;
         });
-        log.info("{}", hashMap);
     }
 
     @Override

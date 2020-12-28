@@ -35,5 +35,12 @@ WHERE
 
 SELECT * FROM fault WHERE cleared_by IS NULL AND event_id IS NOT NULL AND TRUE LIMIT 10 OFFSET 0;
 
-SELECT  FROM fault WHERE event_category <> "event_category";
+SELECT * FROM fault WHERE isolated <> TRUE OR isolated IS NULL;
 
+SELECT `key`, `value` FROM param_code WHERE `key` IN (:keys);
+
+SELECT * FROM ne WHERE id = ?;
+
+SELECT * FROM user_notification;
+
+SELECT * FROM event_rule RIGHT JOIN user_notification un ON event_rule.id = un.rule_id;

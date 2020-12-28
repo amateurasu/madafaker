@@ -1,6 +1,6 @@
 package com.viettel.ems.model.cache;
 
-import com.viettel.ems.model.Rule;
+import com.viettel.ems.model.rule.Rule;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ConcurrentHashMap;
