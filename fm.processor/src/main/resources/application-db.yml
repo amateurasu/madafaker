@@ -12,7 +12,7 @@ spring:
 spring:
   profiles: dev
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/fm?useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/fm?allowPublicKeyRetrieval=true&useSSL=false
     username: root
     password: 1
 

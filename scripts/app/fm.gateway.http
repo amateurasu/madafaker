@@ -7,7 +7,7 @@ Content-Type: application/json
     "event": {
         "commonEventHeader": {
             "version": "4.1", "vesEventListenerVersion": "7.2", "domain": "fault",
-            "eventName": "Fault_Vscf:Acs-Ericcson_PilotNumberPoolExhaustion", "eventId": "TA00001", "sequence": 4,
+            "eventName": "Fault_Vscf:Acs-Ericcson_PilotNumberPoolExhaustion", "eventId": "TA00000", "sequence": 4,
             "priority": "HIGH", "reportingEntityId": "cc305d54-75b4-431b-adb2-eb6b9e541234",
             "reportingEntityName": "ibcx0001vm002oam001", "sourceId": "de305d54-75b4-431b-adb2-eb6b9e546014",
             "sourceName": "scfx0001vm002cap001", "nfVendorName": "Viettel", "nfNamingCode": "scfx",
@@ -27,9 +27,11 @@ Content-Type: application/json
 POST http://{{host}}:8080/fm/alarmreport
 Content-Type: application/json
 
-{
+[
+    {
 
-}
+    }
+]
 
 ### event old format
 POST http://{{host}}:8080/fm/eventreport

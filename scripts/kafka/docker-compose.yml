@@ -37,7 +37,7 @@ services:
     depends_on:
       - broker
     ports:
-      - "8081:8081"
+      - "8100:8081"
     environment:
       TZ: Asia/Ho_Chi_Minh
       SCHEMA_REGISTRY_HOST_NAME: schema-registry

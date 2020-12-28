@@ -28,16 +28,6 @@ public class UserNotification {
     @Column(name = "method")
     private String method;
 
-    @Component
-    public static class Mapper implements RowMapper<UserNotification> {
-        @Override
-        public UserNotification mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return UserNotification.builder()
-                .userId(rs.getString("user_id"))
-                .active(rs.getBoolean("active"))
-                .method(rs.getString("method"))
-                .conditionId(rs.getInt("condition_id"))
-                .build();
-        }
-    }
+    private String phone;
+    private String mail;
 }

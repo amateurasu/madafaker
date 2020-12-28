@@ -1,7 +1,12 @@
 USE fm;
 
 
-INSERT INTO system_type(id, name) VALUES (1, '5G_ACCESS'), (2, '5G_CORE'), (3, 'EMS'), (4, 'OCS');
+INSERT INTO system_type(id, name)
+VALUES
+    (1, '5G_ACCESS'),
+    (2, '5G_CORE'),
+    (3, 'EMS'),
+    (4, 'OCS');
 
 
 INSERT INTO ne_site(id, system_type_id, name, request_limit, time_limit, time_unit)
@@ -95,18 +100,6 @@ VALUES
     (1, 'TE00003', 'EVENT! ISOLATE ME', 0, FALSE);
 
 
-INSERT INTO event_rule(id, name, type, enabled, effective_time, `condition`)
-VALUES
-    (1, 'Work hour notification', 'notification', TRUE, NULL, ''),
-    (2, 'Home notification', 'notification', TRUE, NULL, '');
-
-
-INSERT INTO user_notification (rule_id, user_id, active, method)
-VALUES
-    (1, 'duclm22', TRUE, 'SMS'),
-    (2, 'duclm22', TRUE, 'MAIL');
-
-
 INSERT INTO ne (name, site_id, ip)
 VALUES
     ('local', 1, '127.0.0.1'),
@@ -137,6 +130,7 @@ VALUES
     (1, 'TA00001', 'MAJOR', NULL, 12, 'interface', 'source_type', 'specific_problem', TRUE, 'isolation_history', 35, 'event_name', 'event_type', 'internal_header_fields', 'nfc_naming_code', 'nf_naming_code', 'nf_vendor_name', 'HIGH', 'reporting_entity_id', 'reporting_entity_name', 'source_id', 'source_name', 'stnd_defined_namespace', '1.0', '7.2', 'alarm_condition', 'event_category', '1.0', 'vf_status', 'additional_field'),
     (1, 'TA00001', 'MAJOR', NULL, 12, 'interface', 'source_type', 'specific_problem', TRUE, 'isolation_history', 36, 'event_name', 'event_type', 'internal_header_fields', 'nfc_naming_code', 'nf_naming_code', 'nf_vendor_name', 'HIGH', 'reporting_entity_id', 'reporting_entity_name', 'source_id', 'source_name', 'stnd_defined_namespace', '1.0', '7.2', 'alarm_condition', 'event_category', '1.0', 'vf_status', 'additional_field');
 
+
 INSERT INTO event_rule (id, name, type, enabled, effective_time, `condition`)
 VALUES
 (1, 'Rule 1', 'notification', 1, NULL, '[{"start":["event_code","in",["1002","1003","1004","1006"]]}]'),
@@ -146,7 +140,11 @@ VALUES
 
 INSERT INTO event_rule(id, name, type, enabled, effective_time, `condition`)
 VALUES
-    (5, 'Rule test isolation', 'isolation', TRUE, NULL, '[{"start":["event_code","in",["TA00003", "TE00003"]]}]');
+(5, 'Rule test isolation', 'isolation', TRUE, NULL, '[{"start":["event_code","in",["TA00003", "TE00003"]]}]');
+INSERT INTO event_rule(id, name, type, enabled, effective_time, `condition`)
+VALUES
+(6, 'Rule test script', 'script', TRUE, NULL, '[{"start":["event_code","in",["TA00000"]]}]');
+
 
 INSERT INTO user_notification (rule_id, user_id, active, method)
 VALUES
@@ -211,3 +209,12 @@ VALUES
     (4, 'tuandn3', 1, 'SMS'),
     (4, 'tungtv8', 1, 'SMS');
 
+
+INSERT INTO command_set(id, rule_id, name, ne_list, device_type, stop_on_error, commands)
+VALUES
+    (1, 6, 'Test script rule', '172.16.31.211', '5GA', TRUE, 'SHW CELL: ;'),
+    (2, NULL, 'Test scheduled script', '172.16.31.211', '5GA', TRUE, 'SHW CELL: ;');
+
+INSERT INTO schedule_config (cron_exp, command_set)
+VALUES
+    ('0 0/1 * * * ?', 2);

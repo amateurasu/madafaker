@@ -1,4 +1,4 @@
-package com.viettel.ems.async;
+package com.viettel.ems.utils;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -47,6 +47,10 @@ public class AsyncJdbc {
     }
 
     public <T> Future<List<T>> query(String sql, SqlParameterSource params, RowMapper<T> rowMapper) {
+        return asyncList(() -> namedJdbc.query(sql, params, rowMapper));
+    }
+
+    public <T> Future<List<T>> query(String sql, Map<String, Object> params, RowMapper<T> rowMapper) {
         return asyncList(() -> namedJdbc.query(sql, params, rowMapper));
     }
 

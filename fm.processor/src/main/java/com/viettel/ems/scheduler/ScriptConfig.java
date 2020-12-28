@@ -14,7 +14,7 @@ import static com.viettel.ems.utils.StringUtils.split;
 
 @Data
 @Builder
-public class ScheduleConfig {
+public class ScriptConfig {
 
     private int id;
 
@@ -29,18 +29,4 @@ public class ScheduleConfig {
 
     @JsonProperty("stop_on_error")
     private boolean stopOnError;
-
-    @Component
-    public static class Mapper implements RowMapper<ScheduleConfig> {
-        @Override
-        public ScheduleConfig mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return ScheduleConfig.builder()
-                .id(rs.getInt("id"))
-                .neIpList(split(rs.getString("ne_list"), ","))
-                .deviceType(rs.getString("device_type"))
-                .stopOnError(rs.getBoolean("stop_on_error"))
-                .commandList(split(rs.getString("command_list"), "\n"))
-                .build();
-        }
-    }
 }

@@ -23,9 +23,9 @@ kafka:
 
 ems:
   wm:
-    address: http://127.0.0.1:9000/wm/
+    address: http://127.0.0.1:5555/wm/
   cm:
-    address: http://127.0.0.1:9000/cm/
+    address: http://127.0.0.1:5555/cm/
 
 ---
 spring:
@@ -38,9 +38,9 @@ kafka:
 
 ems:
   wm:
-    address: http://127.0.0.1:9000/wm/
+    address: http://10.60.88.22:8085/warning/send
   cm:
-    address: http://127.0.0.1:9000/cm/
+    address: http://172.16.28.46:8088/configuration/
 
 ---
 spring:
@@ -53,9 +53,7 @@ kafka:
 
 ems:
   wm:
-    address: http://10.60.88.22:8085
-    uri: /warning/send
+    address: http://10.60.88.22:8085/warning/send
   cm:
-    address: http://172.16.28.46:8088
-    uri: /configuration/
+    address: http://172.16.28.46:8088/configuration/
 

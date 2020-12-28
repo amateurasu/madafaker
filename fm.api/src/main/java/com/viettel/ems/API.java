@@ -22,17 +22,6 @@ public class API {
         SpringApplication.run(API.class, args);
     }
 
-    @Bean("jdbcExecutor")
-    public TaskExecutor jdbcExecutor() {
-        var executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(50);
-        executor.setMaxPoolSize(100);
-        executor.setQueueCapacity(200);
-        executor.setThreadNamePrefix("JDBC Processing");
-        executor.initialize();
-        return executor;
-    }
-
     @Bean("computeExecutor")
     public TaskExecutor computeExecutor() {
         var executor = new ThreadPoolTaskExecutor();

@@ -1,6 +1,6 @@
 
 ###
-GET http://{{host}}:8090/fm/v1.0/alarm
+POST http://{{host}}:8090/fm/v1.0/alarm
 Content-Type: application/json
 
 {
@@ -13,7 +13,7 @@ Content-Type: application/json
 }
 
 ### Current Alarm
-GET http://{{host}}:8090/fm/v1.0/alarm/current
+POST http://{{host}}:8090/fm/v1.0/alarm/current
 Content-Type: application/json
 
 {

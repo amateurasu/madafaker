@@ -191,6 +191,7 @@ CREATE TABLE IF NOT EXISTS param_code (
 
 CREATE TABLE IF NOT EXISTS command_set (
     id            INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    rule_id       INT UNSIGNED,
     name          VARCHAR(50),
     ne_list       VARCHAR(250),
     device_type   VARCHAR(50),

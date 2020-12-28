@@ -11,14 +11,13 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ScheduleConfigTest {
+public class ScriptConfigTest {
     @Test
     public void testJsonFormat() throws JsonProcessingException {
-        var config = ScheduleConfig.builder()
+        var config = ScriptConfig.builder()
             .commandList(List.of("xyz"))
             .neIpList(List.of("abc", "def"))
             .stopOnError(true)
@@ -36,7 +35,7 @@ public class ScheduleConfigTest {
             .defaultHeader(HttpHeaders.AUTHORIZATION, "Basic ZHVjbG0yMjpwYXNzd29yZA==")
             .build();
 
-        var config = new ScheduleConfig(0, List.of("SHW CELL: ;"), List.of("172.16.31.211"), "5GA", false);
+        var config = new ScriptConfig(0, List.of("SHW CELL: ;"), List.of("172.16.31.211"), "5GA", false);
         var mapper = new ObjectMapper();
         var response = client.post()
             .uri("/configuration/5ga")
@@ -50,7 +49,7 @@ public class ScheduleConfigTest {
     @Test
     public void a() throws JsonProcessingException {
         var restTemplate = new RestTemplate();
-        var config = new ScheduleConfig(0, List.of("SHW CELL: ;"), List.of("172.16.31.211"), "5GA", false);
+        var config = new ScriptConfig(0, List.of("SHW CELL: ;"), List.of("172.16.31.211"), "5GA", false);
         var mapper = new ObjectMapper();
         System.out.println(mapper.writeValueAsString(config));
 

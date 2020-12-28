@@ -44,3 +44,10 @@ SELECT * FROM ne WHERE id = ?;
 SELECT * FROM user_notification;
 
 SELECT * FROM event_rule RIGHT JOIN user_notification un ON event_rule.id = un.rule_id;
+
+SELECT * FROM user_notification WHERE rule_id in (:list);
+
+SELECT id, rule_id, name, ne_list, device_type, stop_on_error, commands FROM command_set cs WHERE
+    rule_id IN (:list);
+
+SELECT sc.id as id, cron_exp, command_set, rule_id, name, ne_list, device_type, stop_on_error, commands FROM schedule_config sc JOIN command_set cs ON sc.command_set = cs.id;

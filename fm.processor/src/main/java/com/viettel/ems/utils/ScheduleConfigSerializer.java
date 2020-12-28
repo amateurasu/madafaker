@@ -3,23 +3,23 @@ package com.viettel.ems.utils;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import com.viettel.ems.scheduler.ScheduleConfig;
+import com.viettel.ems.scheduler.ScriptConfig;
 
 import java.io.IOException;
 import java.util.List;
 
-public class ScheduleConfigSerializer extends StdSerializer<ScheduleConfig> {
+public class ScheduleConfigSerializer extends StdSerializer<ScriptConfig> {
 
     public ScheduleConfigSerializer() {
         this(null);
     }
 
-    protected ScheduleConfigSerializer(Class<ScheduleConfig> t) {
+    protected ScheduleConfigSerializer(Class<ScriptConfig> t) {
         super(t);
     }
 
     @Override
-    public void serialize(ScheduleConfig value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+    public void serialize(ScriptConfig value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeStartObject();
 
         gen.writeStringField("device_type", value.getDeviceType());
